@@ -6,4 +6,4 @@ install:
   - make -f Makefile.orig deps
 
 script:
-  - make -f Makefile.orig && make test
+  - make -f Makefile.orig && make -f Makefile.orig test
