@@ -39,8 +39,11 @@ endif
 APP = goldy
 OBJS = goldy.o daemonize.o log.o
 
+APP_CLIENT = goldy-client
+APP_CLIENT_OBJS = goldy-client.o daemonize.o log.o
+
 SEND_ONE_DTLS_PACKET = test/send_one_dtls_packet
-SEND_ONE_DTLS_PACKET_OBJS = test/send_one_dtls_packet.o daemonize.o log.o
+SEND_ONE_DTLS_PACKET_OBJS = test/send_one_dtls_packet.o
 
 TEST_CLIENT = test/dtls_test_client
 TEST_CLIENT_OBJS = test/dtls_test_client.o
@@ -51,7 +54,7 @@ TEST_SERVER_OBJS = test/udp_test_server.o
 TEST_APPS = $(SEND_ONE_DTLS_PACKET) $(TEST_CLIENT) $(TEST_SERVER)
 TEST_OBJS = $(SEND_ONE_DTLS_PACKET_OBJS) $(TEST_CLIENT_OBJS) $(TEST_SERVER_OBJS)
 
-SRCS_C = $(OBJS:.o=.c) $(TEST_CLIENT_OBJS:.o=.c) $(TEST_SERVER_OBJS:.o=.c)
+SRCS_C = $(OBJS:.o=.c) $(APP_CLIENT_OBJS:.o=.c) $(TEST_CLIENT_OBJS:.o=.c) $(TEST_SERVER_OBJS:.o=.c)
 SRCS_H = $(OBJS:.o=.h)
 
 GEN_KEY = $(MBEDTLS_PROG_DIR)/mbedtls_gen_key
@@ -59,9 +62,12 @@ CERT_WRITE = $(MBEDTLS_PROG_DIR)/mbedtls_cert_write
 
 .PHONY: all clean distclean deps test format
 
-all: $(APP)
+all: $(APP) $(APP_CLIENT)
 
 $(APP): $(OBJS) $(MBEDTLS_LIBS) $(LIBEV_LIBS)
+	$(LINK) -o $@ $^ $(LOCAL_LDFLAGS) $(LDFLAGS)
+
+$(APP_CLIENT): $(APP_CLIENT_OBJS) $(MBEDTLS_LIBS) $(LIBEV_LIBS)
 	$(LINK) -o $@ $^ $(LOCAL_LDFLAGS) $(LDFLAGS)
 
 $(SEND_ONE_DTLS_PACKET): $(SEND_ONE_DTLS_PACKET_OBJS) $(MBEDTLS_LIBS)
@@ -87,7 +93,7 @@ $(MBEDTLS_CONFIG_INC):
 	@false
 
 clean:
-	rm -f $(APP) $(OBJS) $(TEST_APPS) $(TEST_OBJS)
+	rm -f $(APP) $(APP_CLIENT) $(OBJS) $(APP_CLIENT_OBJS) $(TEST_APPS) $(TEST_OBJS)
 
 distclean: clean
 	$(MAKE) -C deps distclean
@@ -95,7 +101,7 @@ distclean: clean
 deps:
 	$(MAKE) -C deps download_deps build_deps
 
-test: $(TEST_APPS) test/keys/test-proxy-key.pem test/keys/test-proxy-cert.pem
+test: $(APP) $(TEST_APPS) test/keys/test-proxy-key.pem test/keys/test-proxy-cert.pem
 	test/run_test.sh
 
 $(GEN_KEY):
