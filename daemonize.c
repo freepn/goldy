@@ -25,10 +25,10 @@ static void child_handler(int signum)
 }
 
 
-void daemonize(const char *lockfile,const char* daemonuser)
+void daemonize(const char *lockfile, const char* daemonuser, const char* pidfile)
 {
     pid_t pid, sid, parent;
-    int lfp = -1;
+    int lfp = -1, fd;
 
     if ( !daemonuser ) {
         log_error("empty daemon user");
@@ -110,6 +110,27 @@ void daemonize(const char *lockfile,const char* daemonuser)
     freopen( "/dev/null", "r", stdin);
     freopen( "/dev/null", "w", stdout);
     freopen( "/dev/null", "w", stderr);
+
+    /* Create a pidfile */
+    unlink(pidfile);
+
+    fd = open(pidfile, O_WRONLY|O_CREAT|O_EXCL, 0644);
+    if (fd >= 0) {
+        FILE *f;
+
+        f = fdopen(fd, "w");
+        if (f != NULL) {
+            fprintf(f, "%d\n", getpid());
+            fclose(f);
+        } else {
+            log_error("unable to fdopen fd %d, code=%d (%s)", fd, errno, strerror(errno) );
+            exit(EXIT_FAILURE);
+        }
+        close(fd);
+    } else {
+        log_error("unable to open pidfile %s, code=%d (%s)", pidfile, errno, strerror(errno) );
+        exit(EXIT_FAILURE);
+    }
 
     /* Tell the parent process that we are A-okay */
     kill( parent, SIGUSR1 );

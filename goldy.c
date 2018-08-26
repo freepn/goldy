@@ -959,7 +959,7 @@ int main(int argc, char **argv) {
     exit(1);
   }
   if (gi.daemonize) {
-    daemonize(NULL, GOLDY_DAEMON_USER);
+    daemonize(NULL, GOLDY_DAEMON_USER, SERVER_PIDFILE);
   }
   if ((ret = global_init(&gi, &gc)) != 0) {
     printf("global initialization failed\n");

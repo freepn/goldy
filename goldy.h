@@ -4,6 +4,9 @@
 #define GOLDY_VERSION "0.2"
 #define GOLDY_DAEMON_USER "goldy"
 
+#define CLIENT_PIDFILE "/run/goldy-client.pid"
+#define SERVER_PIDFILE "/run/goldy.pid"
+
 #define DEFAULT_SESSION_TIMEOUT 60
 
 struct instance {

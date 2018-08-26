@@ -182,7 +182,7 @@ int main(int argc, char *argv[]) {
   }
 
   if (daemon) {
-    daemonize(NULL, GOLDY_DAEMON_USER);
+    daemonize(NULL, GOLDY_DAEMON_USER, CLIENT_PIDFILE);
   }
 
 #if defined(MBEDTLS_DEBUG_C)
