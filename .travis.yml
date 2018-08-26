@@ -3,7 +3,7 @@ sudo: false
 language: c
 
 install:
-  - make deps
+  - make -f Makefile.orig deps
 
 script:
-  - make && make test
+  - make -f Makefile.orig && make test
