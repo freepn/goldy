@@ -1,7 +1,7 @@
 # Goldy
 
 [![Build Status](https://travis-ci.org/teamorchard/goldy.svg?branch=master)](https://travis-ci.org/teamorchard/goldy)
-[![Code Climate](https://codeclimate.com/github/teamorchard/goldy/badges/gpa.svg)](https://codeclimate.com/github/teamorchard/goldy)
+[![Ebert](https://ebertapp.io/github/teamorchard/goldy.svg)](https://ebertapp.io/github/teamorchard/goldy)
 [![Github Issues](http://githubbadges.herokuapp.com/teamorchard/goldy/issues.svg?style=flat-square)](https://github.com/teamorchard/goldy/issues)
 
 **goldy** is lightweight [DTLS](https://en.wikipedia.org/wiki/Datagram_Transport_Layer_Security)
