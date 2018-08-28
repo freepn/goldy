@@ -28,9 +28,9 @@
 #include <sys/types.h>
 #include <arpa/inet.h>
 
-#include "../goldy.h"
-#include "../daemonize.h"
-#include "../log.h"
+#include "goldy.h"
+#include "daemonize.h"
+#include "log.h"
 
 #define SSL_HANDSHAKE_TIMEOUT_MILLISECS 4000
 

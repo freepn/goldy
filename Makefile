@@ -1,21 +1,18 @@
-include deps/versions.mk
+MBEDTLS_INC_DIR ?= /usr/include/mbedtls
+MBEDTLS_LIB_DIR ?= /usr/lib
+MBEDTLS_PROG_DIR ?= /usr/bin
+LIBEV_INC_DIR ?= /usr/include
+LIBEV_LIB_DIR ?= /usr/lib
 
-MBEDTLS_DIR ?= deps/mbedtls-$(MBEDTLS_VER)
-MBEDTLS_INC_DIR ?= $(MBEDTLS_DIR)/include
-MBEDTLS_LIB_DIR ?= $(MBEDTLS_DIR)/library
-MBEDTLS_PROG_DIR ?= $(MBEDTLS_DIR)/programs
-LIBEV_INC_DIR ?= deps/libev-$(LIBEV_VER)
-LIBEV_LIB_DIR ?= deps/libev-$(LIBEV_VER)
-
-CFLAGS ?= -g
+CFLAGS := $(CFLAGS) -g -fno-strict-aliasing
 WARNING_CFLAGS ?= -Wall -W -Wdeclaration-after-statement
 LDFLAGS ?=
 
 LOCAL_CFLAGS = $(WARNING_CFLAGS) -I$(MBEDTLS_INC_DIR) -I$(LIBEV_INC_DIR) -D_FILE_OFFSET_BITS=64
 LOCAL_LDFLAGS = -lm
 MBEDTLS_LIBS = $(MBEDTLS_LIB_DIR)/libmbedtls.a $(MBEDTLS_LIB_DIR)/libmbedx509.a $(MBEDTLS_LIB_DIR)/libmbedcrypto.a
-MBEDTLS_CONFIG_INC = $(MBEDTLS_INC_DIR)/mbedtls/config.h
-LIBEV_LIBS = $(LIBEV_LIB_DIR)/.libs/libev.a
+MBEDTLS_CONFIG_INC = $(MBEDTLS_INC_DIR)/config.h
+LIBEV_LIBS = $(LIBEV_LIB_DIR)/libev.a
 
 ifdef DEBUG
 LOCAL_CFLAGS += -g3
@@ -39,8 +36,10 @@ else
 	INDENT = indent $(INDENT_SETTINGS)
 endif
 
-APP = goldy
-OBJS = goldy.o daemonize.o log.o
+SERVER = goldy
+SERVER_OBJS = goldy.o daemonize.o log.o
+CLIENT = goldy-client
+CLIENT_OBJS = goldy-client.o daemonize.o log.o
 
 SEND_ONE_DTLS_PACKET = test/send_one_dtls_packet
 SEND_ONE_DTLS_PACKET_OBJS = test/send_one_dtls_packet.o
@@ -57,14 +56,17 @@ TEST_OBJS = $(SEND_ONE_DTLS_PACKET_OBJS) $(TEST_CLIENT_OBJS) $(TEST_SERVER_OBJS)
 SRCS_C = $(OBJS:.o=.c) $(TEST_CLIENT_OBJS:.o=.c) $(TEST_SERVER_OBJS:.o=.c)
 SRCS_H = $(OBJS:.o=.h)
 
-GEN_KEY = $(MBEDTLS_PROG_DIR)/pkey/gen_key
-CERT_WRITE = $(MBEDTLS_PROG_DIR)/x509/cert_write
+GEN_KEY = $(MBEDTLS_PROG_DIR)/mbedtls_gen_key
+CERT_WRITE = $(MBEDTLS_PROG_DIR)/mbedtls_cert_write
 
 .PHONY: all clean distclean deps test format
 
-all: $(APP)
+all: $(SERVER) $(CLIENT)
 
-$(APP): $(OBJS) $(MBEDTLS_LIBS) $(LIBEV_LIBS)
+$(SERVER): $(SERVER_OBJS) $(MBEDTLS_LIBS) $(LIBEV_LIBS)
+	$(LINK) -o $@ $^ $(LOCAL_LDFLAGS) $(LDFLAGS)
+
+$(CLIENT): $(CLIENT_OBJS) $(MBEDTLS_LIBS)
 	$(LINK) -o $@ $^ $(LOCAL_LDFLAGS) $(LDFLAGS)
 
 $(SEND_ONE_DTLS_PACKET): $(SEND_ONE_DTLS_PACKET_OBJS) $(MBEDTLS_LIBS)
