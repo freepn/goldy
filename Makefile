@@ -10,7 +10,7 @@ LDFLAGS ?=
 
 LOCAL_CFLAGS = $(WARNING_CFLAGS) -I$(MBEDTLS_INC_DIR) -I$(LIBEV_INC_DIR) -D_FILE_OFFSET_BITS=64
 LOCAL_LDFLAGS = -lm
-MBEDTLS_LIBS = $(MBEDTLS_LIB_DIR)/libmbedtls.a $(MBEDTLS_LIB_DIR)/libmbedx509.a $(MBEDTLS_LIB_DIR)/libmbedcrypto.a
+MBEDTLS_LIBS = $(MBEDTLS_LIB_DIR)/libmbedtls.so $(MBEDTLS_LIB_DIR)/libmbedx509.so $(MBEDTLS_LIB_DIR)/libmbedcrypto.so
 MBEDTLS_CONFIG_INC = $(MBEDTLS_INC_DIR)/config.h
 LIBEV_LIBS = $(LIBEV_LIB_DIR)/libev.a
 
@@ -59,7 +59,7 @@ SRCS_H = $(OBJS:.o=.h)
 GEN_KEY = $(MBEDTLS_PROG_DIR)/mbedtls_gen_key
 CERT_WRITE = $(MBEDTLS_PROG_DIR)/mbedtls_cert_write
 
-.PHONY: all clean distclean deps test format
+.PHONY: all clean distclean test format
 
 all: $(SERVER) $(CLIENT)
 
@@ -81,24 +81,10 @@ $(TEST_SERVER): $(TEST_SERVER_OBJS) $(LIBEV_LIBS)
 %.o: %.c $(MBEDTLS_CONFIG_INC)
 	$(COMPILE) -o $@ -c $<
 
-$(MBEDTLS_CONFIG_INC):
-	@echo ""
-	@echo "mbed TLS include files not found in $(MBEDTLS_INC_DIR); run:"
-	@echo ""
-	@echo "    make deps"
-	@echo ""
-	@echo "to download and build mbed TLS."
-	@echo ""
-	@false
-
 clean:
-	rm -f $(APP) $(OBJS) $(TEST_APPS) $(TEST_OBJS)
+	rm -f $(SERVER) $(CLIENT) $(SERVER_OBJS) $(CLIENT_OBJS) $(TEST_APPS) $(TEST_OBJS) test/keys/*.pem
 
 distclean: clean
-	$(MAKE) -C deps distclean
-
-deps:
-	$(MAKE) -C deps download_deps build_deps
 
 test: $(TEST_APPS) test/keys/test-proxy-key.pem test/keys/test-proxy-cert.pem
 	test/run_test.sh
