@@ -3,7 +3,7 @@ sudo: false
 language: c
 
 install:
-  - apt-get -y install libmedtls-dev
+  - sudo apt-get -y install libmedtls-dev
 
 script:
   - make && make test
