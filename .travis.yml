@@ -1,10 +1,12 @@
-sudo: required
+sudo: false
+dist: trusty
 
 language: c
 
-install:
-  - sudo apt-get update
-  - sudo apt-get -y install libmbedtls-dev
+addons:
+  apt:
+    packages:
+      - "libmbedtls-dev"
 
 script:
   - make && make test
