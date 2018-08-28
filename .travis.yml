@@ -5,8 +5,9 @@ language: c
 
 addons:
   apt:
+    update: true
     packages:
-      - "libmbedtls-dev"
+      - libmbedtls-dev
 
 script:
   - make && make test
