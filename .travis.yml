@@ -1,14 +1,13 @@
 sudo: required
-dist: trusty
+dist: xenial
 
 language: c
 
 addons:
   apt:
     update: true
-
-before_install:
-  - sudo apt-get install -y libmbedtls-dev
+    packages:
+      - libmbedtls-dev
 
 script:
   - make && make test
