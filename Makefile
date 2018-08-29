@@ -1,5 +1,5 @@
 MBEDTLS_INC_DIR ?= /usr/include/mbedtls
-MBEDTLS_LIB_DIR ?= /usr/lib
+MBEDTLS_LIB_DIR ?= /usr/lib/x86_64-linux-gnu
 MBEDTLS_PROG_DIR ?= /usr/bin
 LIBEV_INC_DIR ?= /usr/include
 LIBEV_LIB_DIR ?= /usr/lib
