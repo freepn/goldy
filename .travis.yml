@@ -1,13 +1,7 @@
 sudo: required
-dist: bionic
+dist: trusty
 
 language: c
 
-addons:
-  apt:
-    update: true
-    packages:
-      - libmbedtls-dev
-
 script:
-  - make && make test
+  - make deps && make && make test

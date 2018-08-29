@@ -1,8 +1,11 @@
-MBEDTLS_INC_DIR ?= /usr/include/mbedtls
-MBEDTLS_LIB_DIR ?= /usr/lib/x86_64-linux-gnu
-MBEDTLS_PROG_DIR ?= /usr/bin
-LIBEV_INC_DIR ?= /usr/include
-LIBEV_LIB_DIR ?= /usr/lib
+include deps/versions.mk
+
+MBEDTLS_DIR ?= deps/mbedtls-$(MBEDTLS_VER)
+MBEDTLS_INC_DIR ?= $(MBEDTLS_DIR)/include
+MBEDTLS_LIB_DIR ?= $(MBEDTLS_DIR)/library
+MBEDTLS_PROG_DIR ?= $(MBEDTLS_DIR)/programs
+LIBEV_INC_DIR ?= deps/libev-$(LIBEV_VER)
+LIBEV_LIB_DIR ?= deps/libev-$(LIBEV_VER)
 
 CFLAGS := $(CFLAGS) -g -fno-strict-aliasing
 WARNING_CFLAGS ?= -Wall -W -Wdeclaration-after-statement
@@ -11,8 +14,8 @@ LDFLAGS ?=
 LOCAL_CFLAGS = $(WARNING_CFLAGS) -I$(MBEDTLS_INC_DIR) -I$(LIBEV_INC_DIR) -D_FILE_OFFSET_BITS=64
 LOCAL_LDFLAGS = -lm
 MBEDTLS_LIBS = $(MBEDTLS_LIB_DIR)/libmbedtls.so $(MBEDTLS_LIB_DIR)/libmbedx509.so $(MBEDTLS_LIB_DIR)/libmbedcrypto.so
-MBEDTLS_CONFIG_INC = $(MBEDTLS_INC_DIR)/config.h
-LIBEV_LIBS = $(LIBEV_LIB_DIR)/libev.a
+MBEDTLS_CONFIG_INC = $(MBEDTLS_INC_DIR)/mbedtls/config.h
+LIBEV_LIBS = $(LIBEV_LIB_DIR)/.libs/libev.so
 
 ifdef DEBUG
 LOCAL_CFLAGS += -g3
@@ -59,7 +62,7 @@ SRCS_H = $(OBJS:.o=.h)
 GEN_KEY = $(MBEDTLS_PROG_DIR)/mbedtls_gen_key
 CERT_WRITE = $(MBEDTLS_PROG_DIR)/mbedtls_cert_write
 
-.PHONY: all clean distclean test format
+.PHONY: all clean distclean deps test format
 
 all: $(SERVER) $(CLIENT)
 
@@ -85,6 +88,10 @@ clean:
 	rm -f $(SERVER) $(CLIENT) $(SERVER_OBJS) $(CLIENT_OBJS) $(TEST_APPS) $(TEST_OBJS) test/keys/*.pem
 
 distclean: clean
+	$(MAKE) -C deps distclean
+
+deps:
+	$(MAKE) -C deps download_deps build_deps
 
 test: $(TEST_APPS) test/keys/test-proxy-key.pem test/keys/test-proxy-cert.pem
 	test/run_test.sh
