@@ -59,8 +59,8 @@ TEST_OBJS = $(SEND_ONE_DTLS_PACKET_OBJS) $(TEST_CLIENT_OBJS) $(TEST_SERVER_OBJS)
 SRCS_C = $(OBJS:.o=.c) $(TEST_CLIENT_OBJS:.o=.c) $(TEST_SERVER_OBJS:.o=.c)
 SRCS_H = $(OBJS:.o=.h)
 
-GEN_KEY = $(MBEDTLS_PROG_DIR)/mbedtls_gen_key
-CERT_WRITE = $(MBEDTLS_PROG_DIR)/mbedtls_cert_write
+GEN_KEY = $(MBEDTLS_PROG_DIR)/pkey/gen_key
+CERT_WRITE = $(MBEDTLS_PROG_DIR)/x509/cert_write
 
 .PHONY: all clean distclean deps test format
 
