@@ -7,12 +7,12 @@ MBEDTLS_PROG_DIR ?= $(MBEDTLS_DIR)/programs
 LIBEV_INC_DIR ?= deps/libev-$(LIBEV_VER)
 LIBEV_LIB_DIR ?= deps/libev-$(LIBEV_VER)
 
-CFLAGS ?= -g
+CFLAGS := $(CFLAGS) -g -fno-strict-aliasing
 WARNING_CFLAGS ?= -Wall -W -Wdeclaration-after-statement
 LDFLAGS ?=
 
 LOCAL_CFLAGS = $(WARNING_CFLAGS) -I$(MBEDTLS_INC_DIR) -I$(LIBEV_INC_DIR) -D_FILE_OFFSET_BITS=64
-LOCAL_LDFLAGS = -lm
+LOCAL_LDFLAGS = -lm -lz
 MBEDTLS_LIBS = $(MBEDTLS_LIB_DIR)/libmbedtls.a $(MBEDTLS_LIB_DIR)/libmbedx509.a $(MBEDTLS_LIB_DIR)/libmbedcrypto.a
 MBEDTLS_CONFIG_INC = $(MBEDTLS_INC_DIR)/mbedtls/config.h
 LIBEV_LIBS = $(LIBEV_LIB_DIR)/.libs/libev.a
