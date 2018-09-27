@@ -49,14 +49,11 @@ LT_INIT([dlopen])
 dnl Checks for TLS
 AX_TLS([:], [:])
 
+AC_CHECK_HEADERS([ev.h], [], [])
+AC_CHECK_LIB([ev], [ev_loop_destroy], [LIBS="-lev $LIBS"], [AC_MSG_ERROR([Could not find libev.])])
+
 # Check for mbedtls libs using m4 macro
 MBEDTLS
-
-AC_CHECK_HEADERS([ev.h], [], [])
-AC_CHECK_LIB([ev], [ev_loop_destroy], [LIBS="-lev $LIBS"], [AC_MSG_ERROR([Couldn't find libev. Try installing libev-dev@<:@el@:>@.])])
-
-#pkgconfigdir=${libdir}/pkgconfig
-#AC_SUBST(pkgconfigdir)
 
 dnl Enable and check for degug flags
 AC_ARG_ENABLE([debug],

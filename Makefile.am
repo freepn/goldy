@@ -12,9 +12,9 @@ AM_CPPFLAGS   = -I$(includedir) -D_FILE_OFFSET_BITS=64
 AM_CFLAGS     = $(DBG) $(LOCAL_CFLAGS) \
                 -fno-strict-aliasing
 
-AM_LDFLAGS    = $(LIBS) -lm -lz $(DBG)
+AM_LDFLAGS    = -g $(DBG)
 
-goldy_LDADD   = -lmbedtls -lmbedx509 -lmbedcrypto
+goldy_LDADD   = -lm -lz
 
 bin_PROGRAMS  = goldy
 

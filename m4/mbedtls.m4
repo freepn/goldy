@@ -23,7 +23,7 @@ AC_DEFUN([MBEDTLS],
   )
 
   AC_CHECK_LIB(mbedcrypto, mbedtls_cipher_setup,
-    [LIBS="-lmbedcrypto $LIBS"],
+    [LIBS="-lmbedcrypto -lmbedtls -lmbedx509 $LIBS"],
     [AC_MSG_ERROR([mbed TLS libraries not found.])]
   )
 
