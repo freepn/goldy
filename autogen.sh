@@ -13,27 +13,5 @@ abort () {
 }
 
 set -x
-aclocal || abort "aclocal"
-libtoolize --ltdl --force --copy || abort "libtoolize"
-autoheader || abort "autoheader"
-automake --gnu --add-missing --copy || abort "automake"
-autoconf || abort "autoconf"
 
-if test -z "$*"; then
-        echo "I am going to run ./configure with no arguments - if you wish "
-        echo "to pass any to it, please specify them on the $0 command line."
-fi
-
-cd "$THEDIR"
-
-$srcdir/configure "$@" || abort "configure"
-
-set +x
-
-echo "Now type:"
-echo
-echo "make"
-echo "make install"
-echo
-echo "have fun."
-
+autoreconf -v -f -i || abort

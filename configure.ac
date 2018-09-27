@@ -18,17 +18,20 @@ AM_MAINTAINER_MODE
 AM_DEP_TRACK
 
 #MNEDTLS_REQUIRED=2.4.0
-AC_DISABLE_STATIC
-AC_DISABLE_SHARED
-LT_INIT([dlopen])
 
 # Checks for programs.
 AC_PROG_CC
 AC_PROG_INSTALL
 AC_PROG_MAKE_SET
 AM_PROG_AR
+
+AC_DISABLE_STATIC
+AC_DISABLE_SHARED
 LT_PREREQ([2.2.6])
-LT_INIT
+LT_INIT([dlopen])
+
+LT_CONFIG_LTDL_DIR([libltdl])
+LTDL_INIT
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_HEADER_ASSERT
@@ -40,6 +43,10 @@ AC_TYPE_UINT32_T
 
 # Checks for library functions.
 AC_CHECK_FUNCS([malloc memset socket posix_memalign])
+
+AC_DISABLE_STATIC
+AC_DISABLE_SHARED
+LT_INIT([dlopen])
 
 dnl Checks for TLS
 AX_TLS([:], [:])
