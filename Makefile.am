@@ -10,11 +10,11 @@ endif
 AM_CPPFLAGS   = -I$(includedir) -D_FILE_OFFSET_BITS=64
 
 AM_CFLAGS     = $(DBG) $(LOCAL_CFLAGS) \
-                -fno-strict-aliasing \
-                $(MBEDTLS_CFLAGS) \
-                $(LIBEV_CFLAGS)
+                -fno-strict-aliasing
 
-AM_LDFLAGS    = $(MBEDTLS_LIBS) $(LIBEV_LIBS) -lm -lz $(DBG)
+AM_LDFLAGS    = $(LIBS) -lm -lz $(DBG)
+
+goldy_LDADD   = -lmbedtls -lmbedx509 -lmbedcrypto
 
 bin_PROGRAMS  = goldy
 
