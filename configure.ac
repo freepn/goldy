@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.68])
-AC_INIT([goldy], [0.0.1], [https://github.com/teamorchard/goldy/issues])
+AC_INIT([goldy], [0.0.2], [https://github.com/teamorchard/goldy/issues])
 
 AC_CONFIG_SRCDIR([Makefile.am])
 AC_CONFIG_HEADERS([config.h])
