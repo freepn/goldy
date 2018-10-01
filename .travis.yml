@@ -1,7 +1,15 @@
+dist: xenial
 sudo: required
-dist: trusty
 
 language: c
 
+before_install:
+  - sudo apt-get update
+  - sudo apt-get install -y debian-keyring debian-ports-archive-keyring debian-archive-keyring
+  - sudo sh -c "echo 'deb [arch=amd64] http://ftp.us.debian.org/debian/ stretch main contrib non-free' >> /etc/apt/sources.list"
+  - sudo sh -c "echo 'deb [arch=amd64] http://ftp.us.debian.org/debian/ stretch-updates main contrib non-free' >> /etc/apt/sources.list"
+  - sudo apt-get update
+  - sudo apt-get install -y libmbedtls-dev libev-dev
+
 script:
-  - make deps && make && make test
+  - ./autogen.sh && ./configure && make
