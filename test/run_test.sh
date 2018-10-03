@@ -71,7 +71,11 @@ done
 goldypid=
 backendpid=
 testdir=$(dirname $0)
-cd $testdir/..
+cd $testdir
+
+gen_test_certs() {
+  bash gen_test_cert.sh
+}
 
 log() {
   echo "# $@"
@@ -107,7 +111,7 @@ cleanup() {
     kill_backend
   fi
   if [ $keep_log_files != 1 ]; then
-    rm -f test/log/*.log
+    rm -f log/*.log
   fi
 }
 
@@ -159,9 +163,9 @@ run_test_file() {
       scenario="${!v}"
       if [ -n "$scenario" ] ; then
         if [ $keep_test_stderr == 1 ]; then
-          test/dtls_test_client -n goldy.local -h $GOLDYHOST -p $GOLDYPORT -s "$scenario" &
+          ./dtls_test_client -n goldy.local -h $GOLDYHOST -p $GOLDYPORT -s "$scenario" &
         else
-          test/dtls_test_client -n goldy.local -h $GOLDYHOST -p $GOLDYPORT -s "$scenario" >> test/log/test_client.log 2>&1 &
+          ./dtls_test_client -n goldy.local -h $GOLDYHOST -p $GOLDYPORT -s "$scenario" >> log/test_client.log 2>&1 &
         fi
         pids="$pids $!"
       fi
@@ -207,25 +211,28 @@ if [[ `uname` == "Darwin" ]] ; then
   fi
 fi
 
+log "Generating test certificate..."
+gen_test_certs
+
 log "Starting goldy..."
 valgrind_cmd=""
 if [ $use_valgrind == 1 ] ; then
   valgrind_cmd="valgrind --leak-check=full --show-reachable=yes -v"
 fi
-goldy_cmdline="./goldy -g DEBUG -l $GOLDYHOST:$GOLDYPORT -b $BACKENDHOST:$BACKENDPORT -c test/keys/test-proxy-cert.pem -k test/keys/test-proxy-key.pem"
+goldy_cmdline="../goldy -g DEBUG -l $GOLDYHOST:$GOLDYPORT -b $BACKENDHOST:$BACKENDPORT -c keys/test-proxy-cert.pem -k keys/test-proxy-key.pem"
 if [ $keep_stderr == 1 ]; then
   $valgrind_cmd $goldy_cmdline &
 else
-  $valgrind_cmd $goldy_cmdline > test/log/goldy.log 2>&1 &
+  $valgrind_cmd $goldy_cmdline > log/goldy.log 2>&1 &
 fi
 
 goldypid=$!
 
 log "Starting test UDP backend server..."
 if [ $keep_test_stderr == 1 ]; then
-  test/udp_test_server -p $BACKENDPORT &
+  ./udp_test_server -p $BACKENDPORT &
 else
-  test/udp_test_server -p $BACKENDPORT > test/log/test_server.log 2>&1 &
+  ./udp_test_server -p $BACKENDPORT > log/test_server.log 2>&1 &
 fi
 backendpid=$!
 
@@ -234,12 +241,12 @@ sleep 1
 
 failures=0
 if [[ $test_num == 0 ]] ; then
-  for f in test/tests/test-* ; do
+  for f in tests/test-* ; do
     run_test_file $f
     failures=$((failures+$?))
   done
 else
-  run_test_file `printf "test/tests/test-%02d" $test_num`
+  run_test_file `printf "tests/test-%02d" $test_num`
   failures=$((failures+$?))
 fi
 
