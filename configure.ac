@@ -55,6 +55,9 @@ AC_CHECK_LIB([ev], [ev_loop_destroy], [LIBS="-lev $LIBS"], [AC_MSG_ERROR([Could 
 # Check for mbedtls libs using m4 macro
 MBEDTLS
 
+# check for check
+PKG_CHECK_MODULES([CHECK], [check >= 0.9.10])
+
 dnl Enable and check for degug flags
 AC_ARG_ENABLE([debug],
 [  --enable-debug    Turn on debugging],
