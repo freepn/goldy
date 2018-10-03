@@ -6,7 +6,7 @@ language: c
 before_install:
   - sudo add-apt-repository ppa:nerdboy/ppa-crypto -y
   - sudo apt-get update -q
-  - sudo apt-get install -y libmbedtls-dev libev-dev
+  - sudo apt-get install -y libmbedtls-dev libev-dev check
 
 script:
   - ./autogen.sh && ./configure && make check
