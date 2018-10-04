@@ -19,7 +19,6 @@ XFAIL_TESTS   = $(BUILT_TESTS)
 
 TESTS = $(check_PROGRAMS)
 check_PROGRAMS = $(BUILT_TESTS)
-include_HEADERS = $(top_srcdir)/
 
 dtls_test_client_SOURCES = dtls_test_client.c
 dtls_test_client_LDADD = -lm -lz
