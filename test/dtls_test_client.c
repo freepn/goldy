@@ -6,18 +6,6 @@
 #define _XOPEN_SOURCE 700
 #endif
 
-#include "mbedtls/config.h"
-#include "mbedtls/platform.h"
-
-#include "mbedtls/net_sockets.h"
-#include "mbedtls/debug.h"
-#include "mbedtls/ssl.h"
-#include "mbedtls/entropy.h"
-#include "mbedtls/ctr_drbg.h"
-#include "mbedtls/error.h"
-#include "mbedtls/certs.h"
-#include "mbedtls/timing.h"
-
 #include <getopt.h>
 #include <stdarg.h>
 #include <string.h>
@@ -27,6 +15,17 @@
 #include <sys/time.h>
 #include <sys/types.h>
 #include <arpa/inet.h>
+
+#include <mbedtls/config.h>
+#include <mbedtls/platform.h>
+#include <mbedtls/net_sockets.h>
+#include <mbedtls/debug.h>
+#include <mbedtls/ssl.h>
+#include <mbedtls/entropy.h>
+#include <mbedtls/ctr_drbg.h>
+#include <mbedtls/error.h>
+#include <mbedtls/certs.h>
+#include <mbedtls/timing.h>
 
 #define SSL_HANDSHAKE_TIMEOUT_MILLISECS 4000
 

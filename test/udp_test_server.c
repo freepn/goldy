@@ -12,8 +12,7 @@
 #include <sys/types.h>
 #include <time.h>
 #include <unistd.h>
-
-#include "ev.h"
+#include <ev.h>
 
 static void plog(const char *format, ...) {
   va_list arglist;

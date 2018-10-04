@@ -1,3 +1,5 @@
+SUBDIRS = . test
+
 AUTOMAKE_OPTIONS = foreign
 ACLOCAL_AMFLAGS = -I m4
 
@@ -6,6 +8,16 @@ LOCAL_CFLAGS = -Wall -W -Wdeclaration-after-statement
 if DEBUG
 DBG = -g3
 endif
+
+EXTRA_DIST    = autogen.sh \
+                README.md \
+                CLA-Corporate.txt \
+                CLA-Individual.txt \
+                CONTRIBUTING.md \
+                LICENSE
+
+export top_srcdir
+
 
 AM_CPPFLAGS   = -I$(includedir) -D_FILE_OFFSET_BITS=64
 
