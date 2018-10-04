@@ -14,13 +14,14 @@ their code.
 
 To build goldy from source:
 
-    git clone .../goldy.git
-    cd goldy
-    make deps
-    make
+  git clone .../goldy.git
+  cd goldy
+  ./autogen.sh
+  ./configure
+  make
 
-Use `make V=1` for a verbose build output and `make DEBUG=1` to enable debug
-info (`-g3`).
+Use `make V=1` for a verbose build output and `./configure --enable-debug` to
+enable debug info (`-g3`).  See `./configure --help` for more options.
 
 ## Help
 
@@ -43,7 +44,7 @@ info (`-g3`).
 The following command compiles the test client and server and then runs the
 full-cycle test suite:
 
-    make test
+    make check
 
 ## License
 
@@ -51,7 +52,10 @@ Goldy is distributed under the [Apache License, version 2.0](LICENSE) .
 
 (c) Copyright IBM Corp. 2015, 2016
 
-Authors: Dov Murik, Shmulik Regev
+Authors:
+
+Dov Murik, Shmulik Regev (IBM Corp.)
+Anthony G. Basile, Stephen L. Arnold (Orchard Systenms, Inc)
 
 Contributions are gladly welcome. Please see the requirement for [Developer Certificate of Origin](CONTRIBUTING.md) .
 
