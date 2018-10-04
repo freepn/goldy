@@ -1,6 +1,7 @@
 # Goldy
 
 [![GitHub](https://img.shields.io/github/license/teamorchard/goldy.svg)](https://github.com/teamorchard/goldy)
+[![GitHub version](https://badge.fury.io/gh/teamorchard%2Fgoldy.svg)](https://badge.fury.io/gh/teamorchard%2Fgoldy)
 [![Build Status](https://travis-ci.org/teamorchard/goldy.svg?branch=master)](https://travis-ci.org/teamorchard/goldy)
 [![Ebert](https://ebertapp.io/github/teamorchard/goldy.svg)](https://ebertapp.io/github/teamorchard/goldy)
 [![Issues](https://img.shields.io/github/issues/teamorchard/goldy.svg)](https://github.com/teamorchard/goldy/issues?q=is:issue+is:open)
