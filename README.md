@@ -2,7 +2,8 @@
 
 [![Build Status](https://travis-ci.org/teamorchard/goldy.svg?branch=master)](https://travis-ci.org/teamorchard/goldy)
 [![Ebert](https://ebertapp.io/github/teamorchard/goldy.svg)](https://ebertapp.io/github/teamorchard/goldy)
-[![Github Issues](http://githubbadges.herokuapp.com/teamorchard/goldy/issues.svg?style=flat-square)](https://github.com/teamorchard/goldy/issues)
+[![GitHub issues](https://img.shields.io/github/issues/badges/shields.svg)](https://github.com/teamorchard/goldy/issues)
+[![GitHub pull requests](https://img.shields.io/github/issues-pr/cdnjs/cdnjs.svg)](https://github.com/teamorchard/goldy/pulls)
 
 **goldy** is lightweight [DTLS](https://en.wikipedia.org/wiki/Datagram_Transport_Layer_Security)
 proxy which allows adding DTLS encryption (using [mbed TLS](https://tls.mbed.org) ) to UDP servers without modifying
