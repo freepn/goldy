@@ -1,10 +1,10 @@
 # Goldy
 
-[![GitHub](https://img.shields.io/github/license/teamorchard/goldy.svg)](https://github.com/teamorchard/goldy)
-[![GitHub version](https://badge.fury.io/gh/teamorchard%2Fgoldy.svg)](https://badge.fury.io/gh/teamorchard%2Fgoldy)
-[![Build Status](https://travis-ci.org/teamorchard/goldy.svg?branch=master)](https://travis-ci.org/teamorchard/goldy)
-[![Issues](https://img.shields.io/github/issues/teamorchard/goldy.svg)](https://github.com/teamorchard/goldy/issues?q=is:issue+is:open)
-[![Pull Requests](https://img.shields.io/github/issues-pr/teamorchard/goldy.svg)](https://github.com/teamorchard/goldy/issues?q=is:open+is:pr)
+[![GitHub](https://img.shields.io/github/license/freepn/goldy.svg)](https://github.com/freepn/goldy)
+[![GitHub version](https://badge.fury.io/gh/freepn%2Fgoldy.svg)](https://badge.fury.io/gh/freepn%2Fgoldy)
+[![Build Status](https://travis-ci.org/freepn/goldy.svg?branch=master)](https://travis-ci.org/freepn/goldy)
+[![Issues](https://img.shields.io/github/issues/freepn/goldy.svg)](https://github.com/freepn/goldy/issues?q=is:issue+is:open)
+[![Pull Requests](https://img.shields.io/github/issues-pr/freepn/goldy.svg)](https://github.com/freepn/goldy/issues?q=is:open+is:pr)
 
 **goldy** is lightweight [DTLS](https://en.wikipedia.org/wiki/Datagram_Transport_Layer_Security)
 proxy which allows adding DTLS encryption (using [mbed TLS](https://tls.mbed.org) ) to UDP servers without modifying
